@@ -1,0 +1,65 @@
+create database test_DB
+
+USE test_DB
+create table employee_tb1
+(
+EmpId int primary key identity(1,1),
+FirstName varchar(50),
+LastName varchar(50),
+Salary float,
+MobileNo varchar(15)
+)
+insert into employee_tb1 values('dulkar','salmon',30000,'9812440031')
+select *from employee_tb1
+delete from employee_tb1 where EmpId=1
+
+
+update employee_tb1 set FirstName='raj' where EmpId=3
+
+/*strored procedure create*/
+
+create procedure Inrec
+(
+@FirstName varchar(50),
+@LastName varchar(50),
+@Salary float,
+@MobileNo varchar(15)
+)
+as
+begin
+insert into employee_tb1 values(@FirstName,@LastName,@Salary,@MobileNo)
+end
+execute Inrec 'arjun','pandian',35000,'9045386272'
+select *from employee_tb1
+
+create procedure Delrec
+(@EmpId int)
+as
+begin
+delete from employee_tb1 where EmpId=@EmpId
+end
+
+execute Delrec 6
+select *from employee_tb1
+
+drop procedure Delrec
+
+
+
+
+create trigger demotrigger on employee_tb1 after insert
+as
+begin
+insert into employee_tb1 values('amar','sevan',32000,'9087298065')
+end
+
+
+create trigger insteadoftrigger on employee_tb1 instead of delete
+as
+begin
+delete from employee_tb1 where EmpId=2
+end
+
+
+select *from employee_tb1
+
